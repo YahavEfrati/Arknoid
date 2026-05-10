@@ -29,4 +29,4 @@ Since the project is configured with an Ant build script, you can easily run it 
    ```bash
     ant run
 
-![Game Screenshot](pic1.png)
+![Game Screenshot](assets/pic1.png)
