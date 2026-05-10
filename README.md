@@ -28,3 +28,5 @@ To run this project locally, ensure you have the following installed:
 Since the project is configured with an Ant build script, you can easily run it using:
    ```bash
     ant run
+
+![Game Screenshot](pic1.png)
