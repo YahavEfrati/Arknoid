@@ -1,8 +1,10 @@
+package game;
+
 /**
  * YAHAV EFRATI 212535660
  * THE MAIN CLASS OF THE GAME.
  */
-public class Ass3Game {
+public class Ass5Game {
     /**
      * Run the game.
      */

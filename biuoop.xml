@@ -60,7 +60,7 @@
     <!-- See https://checkstyle.org/config_sizes.html -->
     <module name="FileLength"/>
     <module name="LineLength">
-        <!-- Line length of 120 instead of the defalult 80 -->
+        <!-- geometry.Line length of 120 instead of the defalult 80 -->
         <property name="max" value="120"/>
     </module>
 
@@ -74,7 +74,7 @@
         <property name="format" value="\s+$"/>
         <property name="minimum" value="0"/>
         <property name="maximum" value="0"/>
-        <property name="message" value="Line has trailing spaces."/>
+        <property name="message" value="geometry.Line has trailing spaces."/>
     </module>
 
     <!-- Checks for Headers                                -->

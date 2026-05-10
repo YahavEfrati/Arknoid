@@ -5,7 +5,7 @@ import java.util.Random;
 import java.awt.Color;
 
 /**
- * This class is for combining the Line and Point classes and making the actual work.
+ * This class is for combining the geometry.Line and geometry.Point classes and making the actual work.
  * Here, we generate a 10 random black lines. For each line, we draw a blue dot on the middle point of the line.
  * For every line intersection, we draw a red dot on the intersection point.
  * If a triangle is made up by the intersections, we draw it in green.
@@ -17,7 +17,7 @@ public class AbstractArtDrawing {
      *This is the Main method that concludes the Main mission.
      */
     public void drawProject() {
-        GUI gui = new GUI("Line Mission", 800, 600);
+        GUI gui = new GUI("geometry.Line Mission", 800, 600);
         DrawSurface drawSurface = gui.getDrawSurface();
         Line[] lines = new Line[10];
         //Loop for drawing 10 random lines on the screen, and a blue point in the middle of every line.
@@ -70,7 +70,7 @@ public class AbstractArtDrawing {
     }
     /**
      * Method that generate a randon line within the screen.
-     * @return a new random Line object.
+     * @return a new random geometry.Line object.
      */
     public Line generateRandomLine() {
         Random rand = new Random();

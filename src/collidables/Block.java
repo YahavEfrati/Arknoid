@@ -1,28 +1,43 @@
+package collidables;
+
 import biuoop.DrawSurface;
+import geometry.Point;
+import geometry.Rectangle;
+import geometry.Velocity;
+import tools.HitListener;
+import tools.HitNotifier;
+import sprites.Ball;
+import sprites.Sprite;
+import game.Game;
+
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A rectangular block in the game that can be collided with and drawn.
  *
- * <p>Blocks are both {@code Collidable} (they provide a collision rectangle and
- * a {@code hit} method) and {@code Sprite} (they know how to draw themselves
+ * <p>Blocks are both {@code collidables.Collidable} (they provide a collision rectangle and
+ * a {@code hit} method) and {@code sprites.Sprite} (they know how to draw themselves
  * each frame).</p>
  */
-public class Block implements Collidable, Sprite {
+public class Block implements Collidable, Sprite, HitNotifier {
     private Rectangle rect;
     private Color color;
+    private List<HitListener> hitListeners;
 
     /**
-     * Constructs a Block with a rectangular shape and defines whether it acts as a frame.
+     * Constructs a collidables.Block with a rectangular shape and defines whether it acts as a frame.
      *
      * @param rect The rectangular boundary of the block.
      */
     public Block(Rectangle rect) {
         this.rect = rect;
+        this.hitListeners = new ArrayList<>();
     }
 
     /**
-     * Constructs a Block with the specified position, size, and color.
+     * Constructs a collidables.Block with the specified position, size, and color.
      * @param upperLeft the upper-left point of the block
      * @param width the width of the block
      * @param height the height of the block
@@ -31,16 +46,18 @@ public class Block implements Collidable, Sprite {
     public Block(Point upperLeft, double width, double height, Color color) {
         this.rect = new Rectangle(upperLeft, width, height);
         this.color = color;
+        this.hitListeners = new ArrayList<>();
     }
 
     /**
-     * Copy constructor. Creates a deep copy of the given Block.
+     * Copy constructor. Creates a deep copy of the given collidables.Block.
      *
-     * @param other The Block to copy.
+     * @param other The collidables.Block to copy.
      */
     public Block(Block other) {
         this.rect = new Rectangle(other.rect.getUpperLeft(), other.rect.getWidth(), other.rect.getHeight());
         this.color = other.color;
+        this.hitListeners = new ArrayList<>();
     }
     /**
      * Sets the color of the block.
@@ -63,7 +80,7 @@ public class Block implements Collidable, Sprite {
     /**
      * Gets a copy of the block's rectangular boundary.
      *
-     * @return A new Rectangle object representing the boundary.
+     * @return A new geometry.Rectangle object representing the boundary.
      */
     protected Rectangle getRect() {
         return new Rectangle(rect.getUpperLeft(), rect.getWidth(), rect.getHeight());
@@ -130,9 +147,10 @@ public class Block implements Collidable, Sprite {
      *
      * @param collisionPoint collision location
      * @param currentVelocity incoming velocity
+     * @param hitter the ball that hit the block
      * @return new velocity after collision
      */
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         double minX = rect.getUpperLeft().getX();
         double maxX = minX + rect.getWidth();
         double minY = rect.getUpperLeft().getY();
@@ -161,6 +179,10 @@ public class Block implements Collidable, Sprite {
         }
         double newDx = flipX ? -currentVelocity.getDx() : currentVelocity.getDx();
         double newDy = flipY ? -currentVelocity.getDy() : currentVelocity.getDy();
+
+        if (!ballColorMatch(hitter)) {
+            this.notifyHit(hitter);
+        }
         return new Velocity(newDx, newDy);
     }
 
@@ -180,11 +202,58 @@ public class Block implements Collidable, Sprite {
     }
 
     /**
-     * Add this block to the given game as both a Collidable and a Sprite.
+     * Add this block to the given game as both a collidables.Collidable and a sprites.Sprite.
      * @param g the game to add the block to
      */
     public void addToGame(Game g) {
         g.addCollidable(this);
         g.addSprite(this);
     }
+
+    /**
+     * Method for checking if the block and the ball as same color.
+     * @param hitter the ball.
+     * @return true of false.
+     */
+    private boolean ballColorMatch(Ball hitter) {
+        return hitter.getColor().equals(this.color);
+    }
+
+    /**
+     * Notify all registered HitListeners about a hit event.
+     * @param hitter the ball that hit the block.
+     */
+    private void notifyHit(Ball hitter) {
+        List<HitListener> listeners = new ArrayList<HitListener>(this.hitListeners);
+        for (HitListener hl : listeners) {
+            hl.hitEvent(this, hitter);
+        }
+    }
+
+    /**
+     * Add a HitListener to the block.
+     * @param hl the hit listener to add.
+     */
+    public void addHitListener(HitListener hl) {
+        this.hitListeners.add(hl);
+    }
+
+    /**
+     * Remove a HitListener from the block.
+     * @param hl the hit listener to remove.
+     */
+    public void removeHitListener(HitListener hl) {
+        this.hitListeners.remove(hl);
+    }
+    /**
+     * Remove this block from the game.
+     * @param g the game to remove the block from.
+     */
+    public void removeFromGame(Game g) {
+        g.removeSprite(this);
+        g.removeCollidable(this);
+    }
+
+
+
 }

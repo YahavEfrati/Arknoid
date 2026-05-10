@@ -1,3 +1,5 @@
+package geometry;
+
 /**
  * Class for speed vectors of moving objects.
  * A Velcocity vector is can be presented in two ways.
@@ -59,7 +61,7 @@ public class Velocity {
      *
      * @param angle of the vector.
      * @param speed of the vector.
-     * @return a new Velocity object.
+     * @return a new geometry.Velocity object.
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
         double radians = Math.toRadians(angle);

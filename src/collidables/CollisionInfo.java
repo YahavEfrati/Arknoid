@@ -1,3 +1,7 @@
+package collidables;
+
+import geometry.Point;
+
 /**
  * Small value object that holds collision details returned by the environment.
  */
@@ -7,7 +11,7 @@ public class CollisionInfo {
     private Collidable object;
 
     /**
-     * Create a CollisionInfo with the collision point and the collidable that was hit.
+     * Create a collidables.CollisionInfo with the collision point and the collidable that was hit.
      *
      * @param collisionPoint the point of collision
      * @param collidableObject the collidable that was hit

@@ -1,10 +1,12 @@
+package geometry;
+
 /**
- *This class is for representing a Point in the space. A point is built by two Positive numbers
+ *This class is for representing a geometry.Point in the space. A point is built by two Positive numbers
  * who reresents the x and y coordinates.
  */
 public class Point {
     /** This epsilon is the threshold to compare doubles.*/
-    static final     double EPSILON = 0.00001;
+    public static final     double EPSILON = 0.00001;
     /** x-coordinate. */
     private double x;
     /** y-coordinate. */

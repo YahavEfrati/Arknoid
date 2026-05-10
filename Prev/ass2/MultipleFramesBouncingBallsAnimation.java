@@ -48,7 +48,7 @@ public class MultipleFramesBouncingBallsAnimation {
             }
         }
 
-//        Block block = new Block(new Rectangle(new Point(100, 100), 100, 100));
+//        collidables.Block block = new collidables.Block(new geometry.Rectangle(new geometry.Point(100, 100), 100, 100));
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface d = gui.getDrawSurface();

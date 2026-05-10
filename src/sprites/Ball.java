@@ -1,4 +1,15 @@
+package sprites;
+
 import biuoop.DrawSurface;
+import collidables.Collidable;
+import collidables.CollisionInfo;
+import game.Game;
+import game.GameEnvironment;
+import geometry.Line;
+import geometry.Point;
+import geometry.Velocity;
+import geometry.Rectangle;
+
 
 import java.awt.Color;
 import java.util.List;
@@ -13,15 +24,15 @@ import java.util.List;
  */
 public class Ball implements Sprite {
     /**
-     * center point of the Ball.
+     * center point of the sprites.Ball.
      */
     private Point center;
     /**
-     * the Radius of the ball - Ball Size.
+     * the Radius of the ball - sprites.Ball Size.
      */
     private int r;
     /**
-     * Ball color.
+     * sprites.Ball color.
      */
     private Color color;
     /**
@@ -37,9 +48,9 @@ public class Ball implements Sprite {
     /**
      * First constructor, with given point.
      *
-     * @param center point of the Ball.
-     * @param r      - the radius - the size of the Ball.
-     * @param color  - the color of the Ball.
+     * @param center point of the sprites.Ball.
+     * @param r      - the radius - the size of the sprites.Ball.
+     * @param color  - the color of the sprites.Ball.
      */
     public Ball(Point center, int r, java.awt.Color color) {
         this.center = center;
@@ -51,10 +62,10 @@ public class Ball implements Sprite {
     /**
      * Second constructor, with given x,y of the center.
      *
-     * @param x     coordinate of the center fo the Ball.
-     * @param y     coordinate of the center fo the Ball.
-     * @param r     - the radius - the size of the Ball.
-     * @param color - the color of the Ball.
+     * @param x     coordinate of the center fo the sprites.Ball.
+     * @param y     coordinate of the center fo the sprites.Ball.
+     * @param r     - the radius - the size of the sprites.Ball.
+     * @param color - the color of the sprites.Ball.
      */
     public Ball(int x, int y, int r, java.awt.Color color) {
         this(new Point(x, y), r, color);
@@ -63,9 +74,9 @@ public class Ball implements Sprite {
     /**
      * First constructor, with given point, and speed.
      *
-     * @param center point of the Ball.
-     * @param r      - the radius - the size of the Ball.
-     * @param color  - the color of the Ball.
+     * @param center point of the sprites.Ball.
+     * @param r      - the radius - the size of the sprites.Ball.
+     * @param color  - the color of the sprites.Ball.
      * @param v      - the speed vector.
      */
     public Ball(Point center, int r, java.awt.Color color, Velocity v) {
@@ -104,7 +115,7 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Getter for the Ball size - the radius.
+     * Getter for the sprites.Ball size - the radius.
      *
      * @return the r value.
      */
@@ -113,7 +124,7 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Getter for the Ball color.
+     * Getter for the sprites.Ball color.
      *
      * @return the color.
      */
@@ -122,7 +133,15 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Seter for the Ball center - we need this for changing the Ball location.
+     * Setter for the sprites.Ball color.
+     * @param c the color.
+     */
+    public void setColor(Color c) {
+        this.color = c;
+    }
+
+    /**
+     * Seter for the sprites.Ball center - we need this for changing the sprites.Ball location.
      *
      * @param center - a new center point.
      */
@@ -131,7 +150,7 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Method to draw the Ball on the given DrawSurface.
+     * Method to draw the sprites.Ball on the given DrawSurface.
      *
      * @param surface - the current screen we use.
      */
@@ -146,7 +165,7 @@ public class Ball implements Sprite {
     /**
      * Set the game environment used for collision detection.
      *
-     * @param environment the GameEnvironment instance
+     * @param environment the game.GameEnvironment instance
      */
     public void setGameEnvironment(GameEnvironment environment) {
         this.environment = environment;
@@ -157,7 +176,7 @@ public class Ball implements Sprite {
      *
      * @param v - the new vector.
      */
-    protected void setVelocity(Velocity v) {
+    public void setVelocity(Velocity v) {
         this.v = new Velocity(v.getDx(), v.getDy());
     }
 
@@ -172,7 +191,7 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Geter for the Velocity vetor value.
+     * Geter for the geometry.Velocity vetor value.
      *
      * @return a new vector.
      */
@@ -209,11 +228,10 @@ public class Ball implements Sprite {
             double newY = collisionPoint.getY() - (Math.signum(currentVelocity.getDy()) * 2);
             this.setCenter(new Point(newX, newY));
             Collidable collidable = collisionInfo.collisionObject();
-            Velocity newVelocity = collidable.hit(collisionPoint, currentVelocity);
+            Velocity newVelocity = collidable.hit(this, collisionPoint, currentVelocity);
             this.setVelocity(newVelocity);
         }
     }
-
 
     /**
      * Notify this ball that time has passed and advance it by one step.
@@ -235,7 +253,7 @@ public class Ball implements Sprite {
     /**
      * Checks if the ball is stuck inside any collidable object in the environment.
      *
-     * @return CollisionInfo object containing information about the collidable
+     * @return collidables.CollisionInfo object containing information about the collidable
      * the ball is stuck in, or null if the ball is not stuck.
      */
     private CollisionInfo gotStuck() {
@@ -254,8 +272,8 @@ public class Ball implements Sprite {
     /**
      * Checks if a given point is inside a collidable object.
      *
-     * @param center          The point representing the center of the ball.
-     * @param collidableInfo  CollisionInfo object containing information about the collidable.
+     * @param center         The point representing the center of the ball.
+     * @param collidableInfo collidables.CollisionInfo object containing information about the collidable.
      * @return true if the point is inside the collidable, false otherwise.
      */
     private boolean isPointInsideCollidable(Point center, CollisionInfo collidableInfo) {
@@ -270,6 +288,7 @@ public class Ball implements Sprite {
         return (maxX > center.getX()) && (minX < center.getX()) && (maxY > center.getY())
                 && (minY < center.getY());
     }
+
     /**
      * Pushes the ball outside of the collidable object.
      * It checks 4 possible escape directions (Left, Right, Top, Bottom).
@@ -327,7 +346,7 @@ public class Ball implements Sprite {
 
     /**
      * Checks if a point is within the screen boundaries.
-     * Assumes screen starts at (0,0) and ends at (800, 600) - utilizing Game constants.
+     * Assumes screen starts at (0,0) and ends at (800, 600) - utilizing game.Game constants.
      *
      * @param p The point to check.
      * @return true if the point is on screen, false otherwise.
@@ -337,6 +356,14 @@ public class Ball implements Sprite {
         // But for strict point checking, 0 to Width is enough.
         return p.getX() >= Game.BORDER_SIZE && p.getX() <= Game.SCREEN_WIDTH - Game.BORDER_SIZE
                 && p.getY() >= Game.BORDER_SIZE && p.getY() <= Game.SCREEN_HEIGHT - Game.BORDER_SIZE;
+    }
+
+    /**
+     * Removes this ball from the game.
+     * @param g the game to remove the ball from.
+     */
+    public void removeFromGame(Game g) {
+        g.removeSprite(this);
     }
 
 }

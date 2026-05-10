@@ -1,5 +1,7 @@
+package geometry;
+
 /**
- * This class is for represnting a Line in space. A line is made up with two given diffrent points.
+ * This class is for represnting a geometry.Line in space. A line is made up with two given diffrent points.
  * This class contains various operations on a line such as intersecting,
  * finding points between 2 lines, and more.
  * For all of the logic behind the lines, whe use equation for non-vertical lines ==> y = mx +b.
@@ -22,7 +24,7 @@ public class Line {
      * @param end   point of line
      */
     public Line(Point start, Point end) {
-        //Line must be from 2 diffrent points
+        //geometry.Line must be from 2 diffrent points
         this.start = new Point(start.getX(), start.getY());
         this.end = new Point(end.getX(), end.getY());
     }
@@ -345,7 +347,7 @@ public class Line {
      * and the given rectangle's edges.
      *
      * @param rect the rectangle to test against
-     * @return the closest intersection Point to the start of this line, or null if none
+     * @return the closest intersection geometry.Point to the start of this line, or null if none
      */
     public Point closestIntersectionToStartOfLine(Rectangle rect) {
         java.util.List<Point> points = rect.intersectionPoints(this);
@@ -375,9 +377,9 @@ public class Line {
 //     * @param p the point to test
 //     * @return true if the point lies on the segment (including endpoints)
 //     */
-//    public boolean isPointOnLine(Point p) {
+//    public boolean isPointOnLine(geometry.Point p) {
 //        return this.isPointInRange(p) && (this.isVertical()
-//                || Math.abs(p.getY() - (this.getSlope() * p.getX() + this.getB())) < Point.EPSILON);
+//                || Math.abs(p.getY() - (this.getSlope() * p.getX() + this.getB())) < geometry.Point.EPSILON);
 //    }
 
 }

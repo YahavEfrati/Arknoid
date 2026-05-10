@@ -1,3 +1,5 @@
+package geometry;
+
 /**
  * Class or represents a rectangular shape in space.
  */
@@ -8,7 +10,7 @@ public class Rectangle {
     private double height;
 
     /**
-     * Constructs a Rectangle with a given upper-left point, width, and height.
+     * Constructs a geometry.Rectangle with a given upper-left point, width, and height.
      *
      * @param upperLeft The upper-left corner point.
      * @param width The width of the rectangle.
@@ -22,7 +24,7 @@ public class Rectangle {
     /**
      * Gets the upper-left corner point of the rectangle.
      *
-     * @return The upper-left corner Point.
+     * @return The upper-left corner geometry.Point.
      */
     public Point getUpperLeft() {
         return this.upperLeft;
@@ -58,7 +60,7 @@ public class Rectangle {
      * If the point is inside the rectangle, the same point is returned.
      *
      * @param p the point to find the closest point to (may be null)
-     * @return a new Point that is the closest point on the rectangle (or null if p is null)
+     * @return a new geometry.Point that is the closest point on the rectangle (or null if p is null)
      */
     public Point getClosestPointOnRectangle(Point p) {
         if (p == null) {

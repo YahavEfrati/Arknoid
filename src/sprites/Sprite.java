@@ -1,11 +1,13 @@
+package sprites;
+
 import biuoop.DrawSurface;
 
 /**
  * A drawable and updatable object in the game.
  *
  * <p>Sprites are responsible for drawing themselves and updating their
- * internal state each frame. Typical implementations include {@code Ball},
- * {@code Block} and {@code Paddle}.</p>
+ * internal state each frame. Typical implementations include {@code sprites.Ball},
+ * {@code collidables.Block} and {@code collidables.Paddle}.</p>
  */
 public interface Sprite {
     /**
